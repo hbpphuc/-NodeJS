@@ -1,0 +1,36 @@
+{
+  "name": "blog",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "nodemon --inspect src/index.js",
+    "style": "node-sass --watch src/resources/scss/ --output src/public/css/",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hbpphuc/NodeJS_ExpressJS.git"
+  },
+  "keywords": [
+    "nodejs",
+    "expressjs",
+    "basic",
+    "node"
+  ],
+  "author": "phuc",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hbpphuc/NodeJS_ExpressJS/issues"
+  },
+  "homepage": "https://github.com/hbpphuc/NodeJS_ExpressJS#readme",
+  "dependencies": {
+    "express": "^4.17.3",
+    "express-handlebars": "^6.0.3"
+  },
+  "devDependencies": {
+    "morgan": "^1.10.0",
+    "node-sass": "^7.0.1",
+    "nodemon": "^2.0.15"
+  }
+}
