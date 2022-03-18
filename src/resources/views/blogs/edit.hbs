@@ -1,0 +1,23 @@
+<div class="mt-4">
+    <h3>Cập nhật bài viết</h3>
+
+    <form method="POST" action="/blogs/{{blog._id}}?_method=PUT">
+        <div class="mb-3">
+            <label for="title">Tiêu đề bài viết</label>
+            <input type="text" class="form-control" value="{{blog.title}}" name="title">
+        </div>
+        <div class="mb-3">
+            <label for="description">Nội dung bài biết</label>
+            <textarea class="form-control" name="description">{{blog.description}}</textarea>
+        </div>
+        <div class="mb-3">
+            <label for="image">Hình ảnh</label>
+            <input type="text" class="form-control" value="{{blog.image}}" name="image">
+        </div>
+        <div class="mb-3">
+            <label for="timereading">Thời gian đọc</label>
+            <input type="text" class="form-control" value="{{blog.timereading}}" name="timereading">
+        </div>
+        <button type="submit" class="btn btn-outline-primary">Lưu bài viết</button>
+    </form>
+</div>

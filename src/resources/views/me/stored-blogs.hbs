@@ -1,0 +1,84 @@
+<div class="mt-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <h3>Bài viết của tôi</h3>
+        <div>
+            <a class="btn btn-outline-success" href="/blogs/create">Thêm bài viết</a>
+            <a class="btn btn-outline-dark" href="/me/trash/blogs">Thùng rác ({{deletedCount}})</a>
+        </div>
+    </div>
+
+    <table class="table mt-4">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col" width="120">Hình ảnh</th>
+                <th scope="col">Tiêu đề bài viết</th>
+                <th scope="col">Thời gian đọc</th>
+                <th scope="col">Thời gian tạo</th>
+                <th>Tác vụ</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each blogs}}
+            <tr class="align-middle">
+                <td scope="row">{{notZero @index 1}}</td>
+                <td>
+                    <img class="img-fluid" src="{{this.image}}" alt="">
+                </td>
+                <td>{{this.title}}</td>
+                <td>{{this.timereading}}</td>
+                <td>{{this.createdAt}}</td>
+                <td>
+                    <a href="/blogs/{{this._id}}/edit" class="btn btn-outline-info">Sửa</a>
+                    <a href="" class="btn btn-outline-warning" data-id="{{this._id}}" data-bs-toggle="modal"
+                        data-bs-target="#deleteBlogModal">Thu hồi</a>
+                </td>
+            </tr>
+            {{else}}
+                <tr>
+                    <td colspan="5" class="text-center">
+                        Bạn chưa đăng bài viết nào
+                        <a href="/blogs/create/">Đăng bài viết mới</a>
+                    </td>
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+
+{{!-- Confirm delete --}}
+
+<div class="modal" id="deleteBlogModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Thu hồi bài viết</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Bạn muốn thu hồi bài viết này?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Không</button>
+                <button id="btnDelete" type="button" class="btn btn-outline-danger">Đồng ý</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form name="deleteBlogForm" method="POST"></form>
+
+<script>
+    var deleteBlogModal = document.getElementById('deleteBlogModal')
+    var deleteForm = document.forms['deleteBlogForm']
+    var BlogsId
+    deleteBlogModal.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget
+        blogsId = button.getAttribute('data-id')
+    })
+    var btnDelete = document.getElementById('btnDelete')
+    btnDelete.onclick = () => {
+        deleteForm.action = '/Blogs/' + blogsId + '?_method=DELETE'
+        deleteForm.submit()
+    }
+</script>

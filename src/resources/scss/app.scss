@@ -1,6 +1,14 @@
 @import '_variables.scss';
 
-h1 {
-    color: $color-pink;
-    background-color: teal;
+.blog-desc-of{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+}
+
+.blog-desc-detail::first-letter{
+    font-size: 30px;
+    font-weight: 600;
 }

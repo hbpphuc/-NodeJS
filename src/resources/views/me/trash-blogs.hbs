@@ -1,0 +1,97 @@
+<div class="mt-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <h3>Bài viết đã thu hồi</h3>
+        <a class="btn btn-outline-success" href="/me/stored/blogs">Danh sách bài viết</a>
+    </div>
+
+    <table class="table mt-4">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col" width="120">Hình ảnh</th>
+                <th scope="col">Tiêu đề bài viết</th>
+                <th scope="col">Thời gian đọc</th>
+                <th scope="col">Thời gian tạo</th>
+                <th>Tác vụ</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each blogs}}
+            <tr>
+                <th scope="row">{{notZero @index 1}}</th>
+                <td>
+                    <img class="img-fluid" src="{{this.image}}" alt="">
+                </td>
+                <td>{{this.title}}</td>
+                <td>{{this.timereading}}</td>
+                <td>{{this.createdAt}}</td>
+                <td>
+                    <a href="" class="btn btn-outline-primary btn-restore" data-id="{{this._id}}">Phục hồi</a>
+                    <a href="" class="btn btn-outline-danger" data-id="{{this._id}}" data-bs-toggle="modal"
+                        data-bs-target="#deleteBlogModal">Xóa</a>
+                </td>
+            </tr>
+            {{else}}
+            <tr>
+                <td colspan="5" class="text-center">
+                    Thùng rác rỗng
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+
+{{!-- Confirm delete --}}
+
+<div class="modal" id="deleteBlogModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-danger">Cảnh báo!!!</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p><b>Bạn có chắc chắn muốn xóa khóa học chứ? Sau khi xóa khóa học sẽ vĩnh viễn biến mất, không thể khôi
+                    phục.</b></p>
+            </div>
+            <div class="modal-footer d-flex justify-content-between align-items-center">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                <button id="btnDelete" type="button" class="btn btn-danger">Xoá Vĩnh Viễn</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<form name="deleteBlogForm" method="POST"></form>
+<form name="retoreBlogForm" method="POST"></form>
+
+<script>
+    var deleteBlogModal = document.getElementById('deleteBlogModal')
+    var deleteForm = document.forms['deleteBlogForm']
+    var blogsId
+    const btnsRestore = document.querySelectorAll('.btn-restore');
+
+
+    btnsRestore.forEach(e => {
+        e.addEventListener('click', (event) => {
+            event.preventDefault();
+            const blogId = e.dataset.id;
+            const restoreForm = document.forms["retoreBlogForm"];
+            restoreForm.action = `/blogs/${blogId}/restore?_method=PATCH`
+            restoreForm.submit();
+        })
+    })
+
+
+    deleteBlogModal.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget
+        blogsId = button.getAttribute('data-id')
+    })
+    var btnDelete = document.getElementById('btnDelete')
+    btnDelete.onclick = () => {
+        deleteForm.action = '/blogs/' + blogsId + '/force?_method=DELETE'
+        deleteForm.submit()
+    }
+</script>
